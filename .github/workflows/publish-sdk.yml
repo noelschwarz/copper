@@ -1,0 +1,52 @@
+name: Publish SDK
+
+# Triggered on tags shaped like `sdk-v0.1.0`. Server (AGPL) is published as
+# Docker image elsewhere; the SDK (MIT) is the only npm-published package.
+on:
+  push:
+    tags:
+      - "sdk-v*"
+
+jobs:
+  publish:
+    name: Build and publish to npm
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      id-token: write # required for npm provenance attestation
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "pnpm"
+          registry-url: "https://registry.npmjs.org"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run SDK tests
+        run: pnpm --filter aloy test
+
+      - name: Build SDK
+        run: pnpm --filter aloy build
+
+      - name: Verify package version matches tag
+        run: |
+          tag="${GITHUB_REF##*/}"          # e.g. sdk-v0.1.0
+          expected="${tag#sdk-v}"          # e.g. 0.1.0
+          actual=$(node -p "require('./packages/sdk/package.json').version")
+          if [ "$expected" != "$actual" ]; then
+            echo "Tag $tag expects version $expected but package.json has $actual"
+            exit 1
+          fi
+
+      - name: Publish to npm
+        run: pnpm --filter aloy publish --access public --no-git-checks --provenance
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

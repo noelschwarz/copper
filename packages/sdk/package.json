@@ -1,0 +1,86 @@
+{
+  "name": "aloy",
+  "version": "0.1.0",
+  "description": "Aloy SDK — safety-first, MCP-native observability for AI agent tool calls. Wrap one line and ship every tool call to a self-hosted Aloy server.",
+  "license": "MIT",
+  "author": "Noel Schwarz <noel@aloy.dev>",
+  "homepage": "https://github.com/noelschwarz/aloy",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noelschwarz/aloy.git",
+    "directory": "packages/sdk"
+  },
+  "bugs": {
+    "url": "https://github.com/noelschwarz/aloy/issues"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "observability",
+    "tool-calls",
+    "mcp",
+    "vercel-ai-sdk",
+    "openai-agents",
+    "safety",
+    "redaction"
+  ],
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./mcp": {
+      "types": "./dist/adapters/mcp.d.ts",
+      "import": "./dist/adapters/mcp.js",
+      "require": "./dist/adapters/mcp.cjs"
+    },
+    "./vercel-ai": {
+      "types": "./dist/adapters/vercel-ai.d.ts",
+      "import": "./dist/adapters/vercel-ai.js",
+      "require": "./dist/adapters/vercel-ai.cjs"
+    },
+    "./openai-agents": {
+      "types": "./dist/adapters/openai-agents.d.ts",
+      "import": "./dist/adapters/openai-agents.js",
+      "require": "./dist/adapters/openai-agents.cjs"
+    }
+  },
+  "files": ["dist", "LICENSE", "README.md"],
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsup",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "peerDependencies": {
+    "@modelcontextprotocol/sdk": ">=0.5.0",
+    "@openai/agents": ">=0.0.5",
+    "ai": ">=4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@modelcontextprotocol/sdk": { "optional": true },
+    "ai": { "optional": true },
+    "@openai/agents": { "optional": true }
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

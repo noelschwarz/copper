@@ -1,0 +1,47 @@
+{
+  "name": "@aloy/api",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Aloy API server (AGPL-3.0).",
+  "license": "AGPL-3.0-or-later",
+  "type": "module",
+  "main": "./dist/index.js",
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup src/index.ts src/cli.ts --format esm --target node20 --clean --sourcemap",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "cli": "tsx src/cli.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "clean": "rm -rf dist .turbo"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.7",
+    "@hono/zod-validator": "^0.4.1",
+    "aloy": "workspace:*",
+    "bcrypt": "^5.1.1",
+    "commander": "^12.1.0",
+    "drizzle-orm": "^0.36.4",
+    "hono": "^4.6.13",
+    "postgres": "^3.4.5",
+    "ulid": "^2.3.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@testcontainers/postgresql": "^10.16.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "^20.17.10",
+    "drizzle-kit": "^0.29.1",
+    "testcontainers": "^10.16.0",
+    "tsup": "^8.3.5",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}

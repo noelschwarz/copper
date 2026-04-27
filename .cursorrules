@@ -1,0 +1,48 @@
+# Cursor rules for the Aloy repo
+
+You are working in the Aloy repository. Read these rules before making changes.
+
+## License split (most important)
+
+This repo is dual-licensed:
+
+- Repository root, `apps/`, server, examples: **AGPL-3.0**.
+- `packages/sdk/`: **MIT**.
+
+Hard rules:
+
+- `packages/sdk/` must NEVER import from `apps/` or any AGPL module in this repo.
+- `apps/` may import the SDK's Zod schemas / types but must NOT copy MIT-only helpers and treat them as AGPL.
+- For genuinely shared logic, vendor a separate copy on each side. Duplication is accepted.
+- If unsure, stop and ask.
+
+## SDK runtime rules
+
+The SDK runs inside other people's agent loops. Treat it like instrumentation in a hot path.
+
+1. Never throw from observation. The only intentional throw is `PolicyViolationError`, before the call executes.
+2. Redact secrets and PII in-process, before transport.
+3. Bounded queue (default 1000). On overflow, drop the oldest event and increment a counter. Never back-pressure the caller.
+4. No blocking I/O. Native `fetch` only — no axios. ESM only.
+
+## Layout
+
+- `apps/api/` — Hono + Drizzle server (AGPL).
+- `packages/sdk/` — `aloy` npm package (MIT).
+- `examples/` — runnable demos (AGPL).
+
+## Tests
+
+- `pnpm --filter aloy test` — SDK (Vitest).
+- `pnpm --filter @aloy/api test` — API (Vitest, Postgres testcontainer; requires Docker).
+- Integration test lives at `apps/api/tests/integration.test.ts`.
+
+## Style
+
+- Biome for lint + format (`pnpm lint`, `pnpm format`).
+- Strict TypeScript, ESM, Node 20+.
+- The SDK targets zero non-essential dependencies.
+
+## When in doubt
+
+Stop and ask before inventing a design decision not in the spec or in `CLAUDE.md`.

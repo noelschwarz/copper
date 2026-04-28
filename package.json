@@ -1,34 +1,54 @@
 {
-  "name": "aloy-monorepo",
-  "version": "0.0.0",
-  "private": true,
-  "description": "Aloy — safety-first, MCP-native observability for AI agent tool calls.",
-  "license": "AGPL-3.0-or-later",
-  "author": "Noel Schwarz <noel@aloy.dev>",
-  "homepage": "https://github.com/noelschwarz/aloy",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/noelschwarz/aloy.git"
-  },
+  "name": "copper",
+  "version": "0.1.0",
+  "description": "See what your AI agent is actually doing. One line, zero infra.",
   "type": "module",
   "engines": {
-    "node": ">=20.10.0"
+    "node": ">=20"
   },
-  "packageManager": "pnpm@9.15.0",
+  "author": "noelschwarz",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/noelschwarz/copper.git"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "cli",
+    "agent",
+    "observability"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "copper": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "test": "turbo run test",
-    "lint": "biome check .",
-    "format": "biome format --write .",
-    "typecheck": "turbo run typecheck",
-    "clean": "turbo run clean && rm -rf node_modules .turbo"
+    "build": "tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit",
+    "check": "biome check .",
+    "format": "biome format --write ."
+  },
+  "dependencies": {
+    "picocolors": "^1.1.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@types/node": "^20.17.10",
-    "turbo": "^2.3.3",
-    "typescript": "^5.7.2",
-    "vitest": "^2.1.8"
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@types/node": "^22.14.1",
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
   }
 }

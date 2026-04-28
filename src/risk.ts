@@ -1,6 +1,9 @@
 import type { RiskResult } from "./types.js";
 
-function collectArgStrings(args: Record<string, unknown>, out: string[] = []): string[] {
+function collectArgStrings(
+  args: Record<string, unknown>,
+  out: string[] = [],
+): string[] {
   for (const v of Object.values(args)) {
     if (typeof v === "string") out.push(v);
     else if (v && typeof v === "object" && !Array.isArray(v)) {
@@ -29,16 +32,20 @@ function nameTokens(name: string): string {
  * v0.1 heuristic risk score for a tool name plus arguments.
  * Highest matching rule wins.
  */
-export function risk(toolName: string, arguments_: Record<string, unknown>): RiskResult {
+export function risk(
+  toolName: string,
+  arguments_: Record<string, unknown>,
+): RiskResult {
   const n = nameTokens(toolName);
 
   const execLike =
-    /\bexec\b/.test(n) || n.includes("run_command") || /\bshell\b/.test(n);
+    /\bexec\b/.test(n) || n.includes("run_command") || n.includes("shell");
   if (execLike) return { score: 90, label: "high" };
 
   if (hasDestructiveSql(arguments_)) return { score: 80, label: "high" };
 
-  if (n.includes("write_file") || n.includes("delete_file")) return { score: 60, label: "medium" };
+  if (n.includes("write_file") || n.includes("delete_file"))
+    return { score: 60, label: "medium" };
 
   if (
     n.includes("fetch") ||

@@ -29,6 +29,18 @@ function stringifyTruncated(value: unknown, useColor: boolean): string {
   return useColor ? pc.dim(cut) : cut;
 }
 
+function isPlainMcpToolResult(value: unknown): boolean {
+  if (!value || typeof value !== "object") return false;
+  const o = value as Record<string, unknown>;
+  return Array.isArray(o.content);
+}
+
+function successPreview(result: unknown, useColor: boolean): string {
+  if (result === undefined || result === null) return "ok";
+  if (isPlainMcpToolResult(result)) return "ok";
+  return stringifyTruncated(result, useColor);
+}
+
 function riskSuffix(label: RiskLabel, useColor: boolean): string {
   if (label === "high") return useColor ? pc.red("⨯ high") : "x high";
   if (label === "medium") return useColor ? pc.yellow("⚠ medium") : "! medium";
@@ -40,7 +52,9 @@ function streamIsTTY(stream: NodeJS.WritableStream): boolean {
 }
 
 /** Whether to emit ANSI styling (TTY streams only). */
-export function shouldUseColorForStream(stream: NodeJS.WritableStream): boolean {
+export function shouldUseColorForStream(
+  stream: NodeJS.WritableStream,
+): boolean {
   if (stream === process.stdout) return Boolean(process.stdout.isTTY);
   if (stream === process.stderr) return Boolean(process.stderr.isTTY);
   return streamIsTTY(stream);
@@ -86,12 +100,9 @@ export function renderToolCall(input: RenderToolCallInput): void {
         : `    → ${errorMessage}\n`,
     );
   } else if (!ok) {
-    stream.write(useColor ? `    ${pc.red("→")} error\n` : `    → error\n`);
+    stream.write(useColor ? `    ${pc.red("→")} error\n` : "    → error\n");
   } else {
-    const preview =
-      result === undefined || result === null
-        ? "ok"
-        : stringifyTruncated(result, useColor);
+    const preview = successPreview(result, useColor);
     stream.write(
       useColor
         ? `    ${pc.green("→")} ${pc.green(preview)}\n`

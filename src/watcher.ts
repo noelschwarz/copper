@@ -1,9 +1,21 @@
 import { redact as defaultRedact } from "./redact.js";
-import { renderToolCall, shouldUseColorForStream, formatSeparator } from "./render.js";
+import {
+  formatSeparator,
+  renderToolCall,
+  shouldUseColorForStream,
+} from "./render.js";
 import { risk as defaultRisk } from "./risk.js";
-import type { CallToolParams, ToolCallEvent, WatchableClient, WatchOptions } from "./types.js";
+import type {
+  CallToolParams,
+  ToolCallEvent,
+  WatchOptions,
+  WatchableClient,
+} from "./types.js";
 
-function safeOnToolCall(cb: ((e: ToolCallEvent) => void) | undefined, event: ToolCallEvent) {
+function safeOnToolCall(
+  cb: ((e: ToolCallEvent) => void) | undefined,
+  event: ToolCallEvent,
+) {
   if (!cb) return;
   try {
     cb(event);
@@ -23,7 +35,10 @@ function safeRender(fn: () => void) {
 /**
  * Wrap an MCP client so every `callTool` is redacted, scored, logged, then passed through.
  */
-export function watch<T extends WatchableClient>(client: T, options?: WatchOptions): T {
+export function watch<T extends WatchableClient>(
+  client: T,
+  options?: WatchOptions,
+): T {
   const stream = options?.stream ?? process.stdout;
   const redactFn = options?.redact ?? defaultRedact;
   const riskFn = options?.risk ?? defaultRisk;
@@ -39,7 +54,10 @@ export function watch<T extends WatchableClient>(client: T, options?: WatchOptio
           const start = Date.now();
           const name = params.name;
           const rawArgs = params.arguments ?? {};
-          const redactedArguments = redactFn(rawArgs) as Record<string, unknown>;
+          const redactedArguments = redactFn(rawArgs) as Record<
+            string,
+            unknown
+          >;
           const riskResult = riskFn(name, rawArgs);
           const useColor = shouldUseColorForStream(stream);
 

@@ -85,15 +85,26 @@ The defaults are designed for the common case — MCP clients calling typical fi
 
 ## What gets redacted
 
-Out of the box, copper scrubs:
+Copper ships with a small set of built-in patterns that cover common cases:
 
-- API keys (`sk-...`, `sk_live_...`, AWS access keys, GitHub tokens, Slack tokens)
-- Email addresses
-- Phone numbers
-- Credit card numbers (Luhn-validated)
-- High-entropy strings that look like secrets
+- **OpenAI**, **Anthropic**, **Stripe** API keys (`sk-...`, `sk-ant-...`, `sk_live_...`)
+- **AWS** access keys (`AKIA...`)
+- **GitHub** personal access tokens (`ghp_...`, `gho_...`, `ghs_...`)
+- **Slack** tokens (`xoxb-...`, `xoxp-...`)
+- Email addresses, phone numbers (E.164), credit card numbers (Luhn-validated)
+- High-entropy strings (32+ chars hex or base64) that look like secrets
 
-Redaction runs recursively through the arguments object before anything is rendered or logged. Bring your own redactor if the defaults aren't enough — pass a function as `redact` and it receives the raw arguments, returns a redacted copy.
+This is **not** an exhaustive list of every vendor's token format. If you're calling tools that pass through Google Cloud keys, Azure connection strings, JWTs, private SSH keys, database connection URIs, or vendor-specific tokens not listed above, copper's defaults will not catch them.
+
+For now, you should treat copper's built-in redaction as a helpful first pass, not a guarantee. If you need broader coverage, pass your own redactor:
+
+```ts
+watch(client, {
+  redact: (args) => myCustomRedactor(args),
+})
+```
+
+A more comprehensive secret-detection ruleset — covering several hundred vendor token formats — is planned for v0.2. See [TODO.md](./TODO.md).
 
 ## What gets flagged as risky
 

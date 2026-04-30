@@ -18,7 +18,7 @@ These apply to issues, pull requests, discussions, and any other space connected
 
 ## If something goes wrong
 
-If you experience or witness behavior that violates this code, email noel@aloy.dev. Reports are handled privately. The maintainer will respond within a few days.
+If you experience or witness behavior that violates this code, email hi@basematter.dev. Reports are handled privately. The maintainer will respond within a few days.
 
 Consequences for breaking this code can include warnings, having content removed, or being blocked from the project. The maintainer decides what's appropriate based on the situation.
 

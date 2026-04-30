@@ -8,7 +8,7 @@ Wrap your MCP client with one line. Watch every tool call your agent makes scrol
 
 <br />
 
-<img src="./docs/demo-screenshot.svg" alt="Copper logging MCP tool calls in a terminal, with risk levels and redacted secrets visible" width="720" />
+<img src="https://raw.githubusercontent.com/noelschwarz/copper/main/docs/demo-screenshot.svg" alt="Copper logging MCP tool calls in a terminal, with risk levels and redacted secrets visible" width="720" />
 
 </div>
 
@@ -23,7 +23,7 @@ It's the smallest possible answer to the question: "what is my agent actually do
 ## Try it in five seconds
 
 ```bash
-npx copper demo
+npx @basematter/copper demo
 ```
 
 That runs a fake agent firing off a handful of tool calls so you can see what the output looks like before wiring up your own.
@@ -31,14 +31,14 @@ That runs a fake agent firing off a handful of tool calls so you can see what th
 ## Install
 
 ```bash
-npm install copper
+npm install @basematter/copper
 ```
 
 ## Use
 
 ```ts
 import { Client } from "@modelcontextprotocol/sdk/client/index.js"
-import { watch } from "copper"
+import { watch } from "@basematter/copper"
 
 const client = watch(new Client(/* ... */))
 

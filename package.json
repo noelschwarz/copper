@@ -1,5 +1,5 @@
 {
-  "name": "copper",
+  "name": "@basematter/copper",
   "version": "0.1.0",
   "description": "See what your AI agent is actually doing. One line, zero infra.",
   "type": "module",
@@ -8,16 +8,21 @@
   },
   "author": "noelschwarz",
   "license": "MIT",
+  "homepage": "https://github.com/noelschwarz/copper#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/noelschwarz/copper.git"
+    "url": "git+https://github.com/noelschwarz/copper.git"
+  },
+  "bugs": {
+    "url": "https://github.com/noelschwarz/copper/issues"
   },
   "keywords": [
     "mcp",
     "model-context-protocol",
     "cli",
     "agent",
-    "observability"
+    "observability",
+    "ai"
   ],
   "exports": {
     ".": {

@@ -37,7 +37,7 @@
   },
   "files": ["dist"],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && node ./scripts/prepend-dts-node-ref.mjs",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "check": "biome check .",
@@ -46,6 +46,14 @@
   },
   "dependencies": {
     "picocolors": "^1.1.1"
+  },
+  "peerDependencies": {
+    "@types/node": ">=20"
+  },
+  "peerDependenciesMeta": {
+    "@types/node": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

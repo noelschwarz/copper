@@ -8,7 +8,7 @@ Wrap your MCP client with one line. Watch every tool call your agent makes scrol
 
 <br />
 
-<img src="https://raw.githubusercontent.com/noelschwarz/copper/main/docs/demo-screenshot.svg" alt="Copper logging MCP tool calls in a terminal, with risk levels and redacted secrets visible" width="720" />
+<img src="https://raw.githubusercontent.com/noelschwarz/copper/main/docs/demo-screenshot.png" alt="Copper logging MCP tool calls in a terminal, with risk levels and redacted secrets visible" width="720" />
 
 </div>
 

@@ -4,7 +4,7 @@
 
 **`tail -f` for AI agent tool calls.**
 
-Wrap your MCP client with one line. Watch every tool call your agent makes scroll past your terminal in real time. Secrets get redacted. Risky calls get flagged. No server, no database, no dashboard — just a small CLI that does one thing well.
+Copper is an open-source CLI by [Basematter](https://basematter.dev) for observability of [MCP (Model Context Protocol)](https://modelcontextprotocol.io) tool calls. Wrap your MCP client with one line. Watch every tool call your agent makes scroll past your terminal in real time. Secrets get redacted. Risky calls get flagged. No server, no database, no dashboard — just a small CLI that does one thing well.
 
 <br />
 
@@ -134,7 +134,7 @@ watch(client, {
 ## Roadmap
 
 - **v0.1** — current. MCP client wrapper, redaction, risk flags, terminal output.
-- **v0.2** — adapters for other tool-calling SDKs, JSON output mode, persistent file logging.
+- **v0.2** — comprehensive secret-detection ruleset, adapters for other tool-calling SDKs, JSON output mode, persistent file logging.
 - **Later** — maybe a small static HTML view if there's interest. Maybe nothing. This is a side project.
 
 ## Contributing

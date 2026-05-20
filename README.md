@@ -26,13 +26,15 @@ It's the smallest possible answer to the question: "what is my agent actually do
 npx @basematter/copper demo
 ```
 
-That runs a fake agent firing off a handful of tool calls so you can see what the output looks like before wiring up your own.
+That runs a fake agent firing off a handful of tool calls so you can see what the output looks like before wiring up your own. From a project that depends on this package, `npm exec copper demo` runs the same demo using the local `copper` binary.
 
 ## Install
 
 ```bash
 npm install @basematter/copper
 ```
+
+Requires **Node.js 20** or newer.
 
 ## Use
 
@@ -139,7 +141,7 @@ watch(client, {
 
 ## Contributing
 
-Issues and pull requests are welcome. The codebase is small enough to read in an afternoon — `src/` has six files, none over a few hundred lines.
+Issues and pull requests are welcome. The codebase is small enough to read in an afternoon — everything lives under `src/` in a handful of TypeScript modules.
 
 Especially helpful first contributions:
 
